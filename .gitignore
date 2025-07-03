@@ -120,6 +120,10 @@ COMPLETE-CHAT-CLEANED-FINAL.md
 COMPLETE-CHAT-CLEANED.md
 clean-emoji.ps1
 
+# Personal development documents (not for public repo)
+demo-package/
+DEVELOPMENT_CHRONICLE.md
+
 # Temp files
 *.tmp
 *.temp
