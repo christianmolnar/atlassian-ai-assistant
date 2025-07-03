@@ -16,7 +16,48 @@ Jira→Confluence→AI→Code workflow
 
 ------------------------------------------------------------------------
 
-## 💡 The Gap Analysis: Why I Couldn't Stop Building This
+## � Due Diligence: Market Research & Competitive Analysis
+
+Before developing this solution, I conducted research on existing Atlassian-related VS Code extensions to understand the current landscape and identify opportunities. This analysis informed the design decisions and confirmed the uniqueness of this approach.
+
+### Existing Atlassian VS Code Extensions
+
+**1. SethFord.atlassian-mcp-server**
+- **Focus**: Model Context Protocol (MCP) server for Atlassian integration
+- **Approach**: Provides MCP-based access to Atlassian services for AI applications
+- **Scope**: Infrastructure-level integration, requires technical setup
+- **Differentiator**: Our solution focuses on direct developer workflow integration with intuitive VS Code commands
+
+**2. Atlassian: Jira & Bitbucket (Official)**
+- **Focus**: Jira issue tracking and Bitbucket repository management
+- **Approach**: Traditional CRUD operations for issues and repositories
+- **Scope**: Project management and code repository integration
+- **Differentiator**: Our solution adds AI-powered code generation from requirements and documentation
+
+### Gap Analysis
+
+The research revealed that existing extensions focus on:
+- Basic CRUD operations (create, read, update, delete) for Jira issues
+- Repository management and code review workflows
+- Infrastructure-level integrations for advanced users
+
+**Missing Elements** (addressed by our solution):
+- **AI-Enhanced Development Workflow**: No existing extension combines Jira requirements with Confluence documentation to generate contextual code
+- **Integrated Knowledge Context**: Current tools don't leverage the full Atlassian ecosystem for AI context
+- **Developer-Centric AI Experience**: Existing solutions require users to manually correlate information across tools
+
+### Validation of Approach
+
+This research confirmed that our approach represents a novel integration pattern:
+1. **Unique Value Proposition**: First extension to demonstrate AI-powered code generation from integrated Atlassian data
+2. **Market Opportunity**: Clear gap in developer-focused AI tooling for Atlassian ecosystem
+3. **Technical Feasibility**: Existing extensions prove the APIs are mature and accessible
+
+The due diligence process reinforced the decision to build this prototype and validated the strategic opportunity for Atlassian to lead in AI-enhanced developer experiences.
+
+------------------------------------------------------------------------
+
+## �💡 The Gap Analysis: Why I Couldn't Stop Building This
 
 ### A Personal Note
 
