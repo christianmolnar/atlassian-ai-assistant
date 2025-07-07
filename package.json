@@ -16,7 +16,7 @@
     "Other"
   ],
   "activationEvents": [],
-  "main": "./out/extension.js",
+  "main": "./dist/extension.js",
   "contributes": {
     "commands": [
       {
@@ -27,6 +27,26 @@
       {
         "command": "atlassian-ai-assistant.openProject",
         "title": "🚀 Open Your Atlassian Projects",
+        "category": "Atlassian AI"
+      },
+      {
+        "command": "atlassian-ai-assistant.checkSprints",
+        "title": "📋 Check Current Sprints",
+        "category": "Atlassian AI"
+      },
+      {
+        "command": "atlassian-ai-assistant.checkBacklog",
+        "title": "📝 Check Project Backlog",
+        "category": "Atlassian AI"
+      },
+      {
+        "command": "atlassian-ai-assistant.openDashboard",
+        "title": "🎯 Open Sprint Planning Dashboard",
+        "category": "Atlassian AI"
+      },
+      {
+        "command": "atlassian-ai-assistant.generateSprintDocs",
+        "title": "📚 Generate Sprint Documentation in Confluence",
         "category": "Atlassian AI"
       }
     ],
@@ -39,6 +59,22 @@
         {
           "command": "atlassian-ai-assistant.openProject",
           "title": "🚀 Open Your Atlassian Projects"
+        },
+        {
+          "command": "atlassian-ai-assistant.checkSprints",
+          "title": "📋 Check Current Sprints"
+        },
+        {
+          "command": "atlassian-ai-assistant.checkBacklog",
+          "title": "📝 Check Project Backlog"
+        },
+        {
+          "command": "atlassian-ai-assistant.openDashboard",
+          "title": "🎯 Open Sprint Planning Dashboard"
+        },
+        {
+          "command": "atlassian-ai-assistant.generateSprintDocs",
+          "title": "📚 Generate Sprint Documentation in Confluence"
         }
       ]
     },
@@ -66,15 +102,29 @@
           "description": "Your OpenAI API key"
         }
       }
-    }
+    },
+    "keybindings": [
+      {
+        "command": "atlassian-ai-assistant.generateSprintDocs",
+        "key": "ctrl+shift+alt+d",
+        "mac": "cmd+shift+alt+d"
+      }
+    ]
   },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
-    "pretest": "npm run compile && npm run lint",
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
     "lint": "eslint src",
-    "test": "vscode-test"
+    "test": "vscode-test",
+    "dev-rebuild": "npm run compile && npx vsce package && code --uninstall-extension atlassian-demo.atlassian-ai-assistant && code --install-extension atlassian-ai-assistant-0.0.1.vsix",
+    "dev-cycle": "npm run dev-rebuild && echo 'Extension rebuilt and installed! Test in VS Code.'",
+    "clean-test-data": "rimraf test-output && mkdir test-output",
+    "test-docs": "echo 'Open VS Code Command Palette and run: Generate Sprint Documentation in Confluence'"
   },
   "devDependencies": {
     "@types/mocha": "^10.0.10",
@@ -85,7 +135,11 @@
     "@vscode/test-cli": "^0.0.10",
     "@vscode/test-electron": "^2.5.2",
     "eslint": "^9.25.1",
-    "typescript": "^5.8.3"
+    "rimraf": "^5.0.10",
+    "ts-loader": "^9.5.2",
+    "typescript": "^5.8.3",
+    "webpack": "^5.99.9",
+    "webpack-cli": "^6.0.1"
   },
   "dependencies": {
     "axios": "^1.10.0",

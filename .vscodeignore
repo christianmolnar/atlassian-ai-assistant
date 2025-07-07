@@ -1,0 +1,50 @@
+# Webpack bundles everything into dist/, so we can exclude most source files
+node_modules/**
+
+# Exclude source files (webpack bundles everything)
+src/**
+out/**
+*.ts
+!dist/**
+
+# Exclude webpack and build files
+webpack.config.js
+
+# Exclude development files
+.git/**
+.gitignore
+.vscode/**
+.vscode-test/**
+**/*.map
+
+# Exclude build and development files
+tsconfig.json
+eslint.config.mjs
+.eslintrc.json
+tslint.json
+
+# Exclude test files
+**/*.test.ts
+**/*.spec.ts
+
+# Exclude documentation and demo files that aren't needed in the package
+docs/**
+demo-package/**
+vsc-extension-quickstart.md
+DEVELOPMENT_CHRONICLE.md
+
+# Exclude images that aren't referenced in package.json
+images/demo/**
+images/screenshots/**
+
+# Keep only necessary images (referenced in package.json or README)
+!images/icon.png
+!images/logo.png
+
+# Exclude development logs and temp files
+*.log
+.DS_Store
+Thumbs.db
+
+# Exclude package files
+*.vsix
