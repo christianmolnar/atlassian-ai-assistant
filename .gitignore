@@ -84,7 +84,7 @@ lerna-debug.log*
 .tern-port
 
 # VS Code workspace settings
-# .vscode/ (allow tasks.json and launch.json to be tracked)
+# .vscode/ (allow tasks.json and launch.json to be tracked)        
 !.vscode/tasks.json
 !.vscode/launch.json
 
