@@ -22,6 +22,10 @@
 		// "noUnusedParameters": true,  /* Report errors on unused parameters. */
 	},
 	"exclude": [
-		"test-output/**/*"
+		"test-output/**/*",
+		"demo-package/**/*",
+		"out/**/*",
+		"dist/**/*",
+		"node_modules/**/*"
 	]
 }
