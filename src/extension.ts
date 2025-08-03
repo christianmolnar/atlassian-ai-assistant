@@ -1238,12 +1238,16 @@ This sprint focuses on **${sprint.name.toLowerCase()}** with the following techn
 			vscode.ViewColumn.One,
 			{
 				enableScripts: true,
-				retainContextWhenHidden: true
+				retainContextWhenHidden: true,
+				localResourceRoots: [vscode.Uri.joinPath(context.extensionUri, 'dist')]
 			}
 		);
 
+		// Get the webview script URI
+		const webviewUri = panel.webview.asWebviewUri(vscode.Uri.joinPath(context.extensionUri, 'dist', 'webview.js'));
+
 		// Set HTML content for the webview
-		panel.webview.html = getWebviewContent();
+		panel.webview.html = getWebviewContent(webviewUri);
 
 		// Handle messages from the webview
 		panel.webview.onDidReceiveMessage(
@@ -1319,7 +1323,7 @@ export function deactivate() {}
 
 
 // Webview HTML content for Sprint Planning Dashboard
-function getWebviewContent(): string {
+function getWebviewContent(webviewUri: vscode.Uri): string {
 	return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1327,6 +1331,7 @@ function getWebviewContent(): string {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sprint Planning Dashboard</title>
     <style>
+        /* VS Code theme integration */
         body {
             font-family: var(--vscode-font-family);
             color: var(--vscode-foreground);
@@ -1334,26 +1339,8 @@ function getWebviewContent(): string {
             padding: 20px;
             margin: 0;
         }
-        .header {
-            border-bottom: 1px solid var(--vscode-panel-border);
-            padding-bottom: 20px;
-            margin-bottom: 20px;
-        }
-        .header h1 {
-            margin: 0 0 10px 0;
-            color: var(--vscode-titleBar-foreground);
-        }
-        .section {
-            margin-bottom: 30px;
-            background: var(--vscode-editor-background);
-            border: 1px solid var(--vscode-panel-border);
-            border-radius: 8px;
-            padding: 20px;
-        }
-        .section h2 {
-            margin-top: 0;
-            color: var(--vscode-titleBar-foreground);
-        }
+        
+        /* Custom styles for VS Code integration */
         .loading {
             text-align: center;
             padding: 40px;
@@ -1414,29 +1401,6 @@ function getWebviewContent(): string {
             font-size: 0.8em;
             color: var(--vscode-descriptionForeground);
         }
-        .button {
-            background: var(--vscode-button-background);
-            color: var(--vscode-button-foreground);
-            border: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 14px;
-            margin-right: 10px;
-        }
-        .button:hover {
-            background: var(--vscode-button-hoverBackground);
-        }
-        .button:disabled {
-            background: var(--vscode-button-secondaryBackground);
-            color: var(--vscode-button-secondaryForeground);
-            cursor: not-allowed;
-        }
-        .actions {
-            margin-top: 20px;
-            padding-top: 20px;
-            border-top: 1px solid var(--vscode-panel-border);
-        }
         .error {
             color: var(--vscode-errorForeground);
             background: var(--vscode-inputValidation-errorBackground);
@@ -1456,13 +1420,13 @@ function getWebviewContent(): string {
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>🎯 Sprint Planning Dashboard</h1>
-        <p>Comprehensive sprint documentation and planning in VS Code</p>
+    <div class="border-b border-gray-200 pb-5 mb-5">
+        <h1 class="text-2xl font-bold text-foreground">🎯 Sprint Planning Dashboard</h1>
+        <p class="text-muted-foreground">Comprehensive sprint documentation and planning in VS Code</p>
     </div>
 
-    <div class="section">
-        <h2>📋 Active Sprints</h2>
+    <div class="bg-card border border-border rounded-lg p-5 mb-6">
+        <h2 class="text-lg font-semibold text-foreground mb-4">📋 Active Sprints</h2>
         <div id="sprints-container">
             <div class="loading">
                 <p>🔄 Loading active sprints...</p>
@@ -1470,24 +1434,17 @@ function getWebviewContent(): string {
         </div>
     </div>
 
-    <div class="section" id="issues-section" style="display: none;">
-        <h2>📝 Sprint Issues</h2>
+    <div class="bg-card border border-border rounded-lg p-5 mb-6" id="issues-section" style="display: none;">
+        <h2 class="text-lg font-semibold text-foreground mb-4">📝 Sprint Issues</h2>
         <div id="issues-container"></div>
-        <div class="actions">
-            <button class="button" id="generate-docs-btn" disabled>
-                📚 Generate Documentation in Confluence
-            </button>
-            <button class="button" id="select-all-btn" disabled>
-                ✅ Select All Issues
-            </button>
-            <button class="button" id="clear-selection-btn" disabled>
-                ❌ Clear Selection
-            </button>
+        <div class="border-t border-border pt-5 mt-5">
+            <div id="action-buttons" class="flex gap-2"></div>
         </div>
     </div>
 
     <div id="messages"></div>
 
+    <script src="${webviewUri}"></script>
     <script>
         const vscode = acquireVsCodeApi();
         let currentSprint = null;
